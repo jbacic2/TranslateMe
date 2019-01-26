@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_nav_graph"
+    app:startDestination="@id/userRegistrationFragment">
+
+    <fragment
+        android:id="@+id/userRegistrationFragment"
+        android:name="com.example.joyce.translateme.ui.registration.UserRegistrationFragment"
+        android:label="fragment_user_registration"
+        tools:layout="@layout/fragment_user_registration" >
+        <action
+            android:id="@+id/action_userRegistrationFragment_to_permissionsGrantFragment"
+            app:destination="@id/permissionsGrantFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/permissionsGrantFragment"
+        android:name="com.example.joyce.translateme.PermissionsGrantFragment"
+        android:label="fragment_permissions_grant"
+        tools:layout="@layout/fragment_permissions_grant" />
+</navigation>

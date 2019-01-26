@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.joyce.translateme.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_translatorWaitFragment"
+            app:destination="@id/translatorWaitFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_userWaitFragment"
+            app:destination="@id/userWaitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/translatorWaitFragment"
+        android:name="com.example.joyce.translateme.ui.wait.TranslatorWaitFragment"
+        android:label="fragment_translator_wait"
+        tools:layout="@layout/fragment_translator_wait" >
+        <action
+            android:id="@+id/action_translatorWaitFragment_to_translatorMapFragment"
+            app:destination="@id/translatorMapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userWaitFragment"
+        android:name="com.example.joyce.translateme.ui.wait.UserWaitFragment"
+        android:label="fragment_user_wait"
+        tools:layout="@layout/fragment_user_wait" >
+        <action
+            android:id="@+id/action_userWaitFragment_to_userMapFragment"
+            app:destination="@id/userMapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/translatorMapFragment"
+        android:name="com.example.joyce.translateme.ui.map.TranslatorMapFragment"
+        android:label="fragment_translator_map"
+        tools:layout="@layout/fragment_translator_map" />
+    <fragment
+        android:id="@+id/userMapFragment"
+        android:name="com.example.joyce.translateme.ui.map.UserMapFragment"
+        android:label="fragment_user_map"
+        tools:layout="@layout/fragment_user_map" />
+</navigation>

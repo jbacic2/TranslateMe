@@ -41,9 +41,15 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
 
     implementation 'com.github.tinder.scarlet:scarlet:0.1.7'
+    implementation 'com.github.tinder.scarlet:scarlet-websocket-okhttp:0.1.7'
+    implementation 'com.github.tinder.scarlet:scarlet-stream-adapter-rxjava2:0.1.7'
+    implementation 'com.github.tinder.scarlet:scarlet-message-adapter-gson:0.1.7'
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'

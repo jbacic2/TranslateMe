@@ -1,7 +1,8 @@
-package com.example.joyce.translateme
+package com.example.joyce.translateme.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.joyce.translateme.R
 
 class MainActivity : AppCompatActivity() {
 

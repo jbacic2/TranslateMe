@@ -1,23 +1,23 @@
-package com.example.joyce.translateme
+package com.example.joyce.translateme.ui.registration
 
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.example.joyce.translateme.R
+import kotlinx.android.synthetic.main.fragment_permissions_grant.*
+import org.koin.android.viewmodel.ext.android.viewModel
+import java.security.Permissions
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- *
- */
 class PermissionsGrantFragment : Fragment() {
+
+    private val vm: RegistrationViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -25,5 +25,18 @@ class PermissionsGrantFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_permissions_grant, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        grantButton.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (requireActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    requireActivity().requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 5)
+                } else {
+                    findNavController().navigate(R.id.registrationWaitFragment)
+                }
+            }
+        }
+    }
 
 }

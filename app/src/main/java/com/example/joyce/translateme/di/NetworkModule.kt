@@ -18,7 +18,7 @@ val networkModule = module {
 
     single {
         Retrofit.Builder()
-                .baseUrl("")
+                .baseUrl("https://joyce.example.com")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(get()))
                 .client(get())
@@ -28,7 +28,7 @@ val networkModule = module {
 
     single {
         Scarlet.Builder()
-                .webSocketFactory(get<OkHttpClient>().newWebSocketFactory(""))
+                .webSocketFactory(get<OkHttpClient>().newWebSocketFactory("wss://joyce.example.com"))
                 .addMessageAdapterFactory(GsonMessageAdapter.Factory())
                 .addStreamAdapterFactory(RxJava2StreamAdapterFactory())
                 .build()

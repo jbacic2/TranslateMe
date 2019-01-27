@@ -1,40 +1,34 @@
 package com.example.joyce.translateme.ui.registration
 
 
-import android.os.Build
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import com.example.joyce.translateme.R
-import kotlinx.android.synthetic.main.fragment_user_registration.*
+import com.example.joyce.translateme.ui.MainActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class UserRegistrationFragment : Fragment() {
+class RegistrationWaitFragment : Fragment() {
 
     private val vm: RegistrationViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_registration, container, false)
+        return inflater.inflate(R.layout.fragment_registration_wait, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        continueButton.setOnClickListener {
-            vm.storeUserInfo(usernameEditText.text.toString(), nameEditText.text.toString())
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                findNavController().navigate(R.id.permissionsGrantFragment)
-            } else {
-                findNavController().navigate(R.id.registrationWaitFragment)
-            }
-        }
-    }
+        vm.saveUser()
 
+        requireContext().startActivity(Intent(requireContext(), MainActivity::class.java))
+        requireActivity().finish()
+    }
 
 }

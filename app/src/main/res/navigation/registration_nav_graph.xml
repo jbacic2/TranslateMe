@@ -16,7 +16,16 @@
     </fragment>
     <fragment
         android:id="@+id/permissionsGrantFragment"
-        android:name="com.example.joyce.translateme.PermissionsGrantFragment"
+        android:name="com.example.joyce.translateme.ui.registration.PermissionsGrantFragment"
         android:label="fragment_permissions_grant"
-        tools:layout="@layout/fragment_permissions_grant" />
+        tools:layout="@layout/fragment_permissions_grant" >
+        <action
+            android:id="@+id/action_permissionsGrantFragment_to_registrationWaitFragment"
+            app:destination="@id/registrationWaitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationWaitFragment"
+        android:name="com.example.joyce.translateme.ui.registration.RegistrationWaitFragment"
+        android:label="fragment_registration_wait"
+        tools:layout="@layout/fragment_registration_wait" />
 </navigation>

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.joyce.translateme.R
 import com.example.joyce.translateme.data.models.Role
 import com.example.joyce.translateme.ui.MainViewModel
+import kotlinx.android.synthetic.main.fragment_translator_wait.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
@@ -27,7 +28,7 @@ class TranslatorWaitFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        vm.plan.observe(this, Observer {
+        vm.otherUser.observe(this, Observer {
             if (it != null) {
                 findNavController().navigate(R.id.translatorMapFragment)
             }
@@ -35,6 +36,10 @@ class TranslatorWaitFragment : Fragment() {
 
         vm.connectSocket(Role.TRANSLATOR)
         vm.getLocationUpdates()
+
+        cancelButton.setOnClickListener {
+            findNavController().navigate(R.id.loginFragment)
+        }
     }
 
     override fun onStop() {

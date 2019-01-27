@@ -32,17 +32,12 @@
         android:label="fragment_user_wait"
         tools:layout="@layout/fragment_user_wait" >
         <action
-            android:id="@+id/action_userWaitFragment_to_userMapFragment"
-            app:destination="@id/userMapFragment" />
+            android:id="@+id/action_userWaitFragment_to_translatorMapFragment"
+            app:destination="@id/translatorMapFragment" />
     </fragment>
     <fragment
         android:id="@+id/translatorMapFragment"
         android:name="com.example.joyce.translateme.ui.map.TranslatorMapFragment"
         android:label="fragment_translator_map"
         tools:layout="@layout/fragment_translator_map" />
-    <fragment
-        android:id="@+id/userMapFragment"
-        android:name="com.example.joyce.translateme.ui.map.UserMapFragment"
-        android:label="fragment_user_map"
-        tools:layout="@layout/fragment_user_map" />
 </navigation>

@@ -22,7 +22,7 @@ data class UserPair(val user: User,
                     val translator: User)
 
 data class UserPlan(val user: User,
-                    val path: String)
+                    val path: String?)
 
 enum class Role {
     TRANSLATOR,

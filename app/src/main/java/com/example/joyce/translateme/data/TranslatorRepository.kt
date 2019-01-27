@@ -25,6 +25,10 @@ class TranslatorRepository(private val apiService: ApiService,
         dataDatabase.getUserDao().updateUser(user)
     }
 
+    fun deleteLocalUserInfo(user: User) {
+        dataDatabase.getUserDao().deleteUser(user)
+    }
+
     fun registerUser(user: User): Single<RegistrationResponse> {
         return apiService.register(user)
                 .subscribeOn(Schedulers.io())

@@ -22,8 +22,8 @@ class MainViewModel(private val repository: TranslatorRepository, private val fu
     private val disposables = CompositeDisposable()
     private var socketConnected: Boolean = false
 
-    private val _plan = MutableLiveData<String>()
-    val plan: LiveData<String> = _plan
+    private val _plan = MutableLiveData<String?>()
+    val plan: LiveData<String?> = _plan
 
     private val _otherUser = MutableLiveData<User>()
     val otherUser: LiveData<User> = _otherUser
@@ -40,6 +40,15 @@ class MainViewModel(private val repository: TranslatorRepository, private val fu
                 repository.sendLocationUpdate(newUser)
                 _currentPosition.value = LatLng(result.lastLocation.latitude, result.lastLocation.longitude)
             }
+        }
+    }
+
+    fun getUser(): User? = repository.getLocalUserInfo()
+
+    fun signOut() {
+        val user = repository.getLocalUserInfo()
+        if (user != null) {
+            repository.deleteLocalUserInfo(user)
         }
     }
 

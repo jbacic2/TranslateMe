@@ -91,8 +91,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="652" />
-                            <option name="y" value="-161" />
+                            <option name="x" value="700" />
+                            <option name="y" value="48" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -119,18 +119,6 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="userMapFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="657" />
-                            <option name="y" value="276" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
                   <entry key="userWaitFragment">
                     <value>
                       <LayoutPositions>
@@ -142,7 +130,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_userWaitFragment_to_userMapFragment">
+                            <entry key="action_userWaitFragment_to_translatorMapFragment">
                               <value>
                                 <LayoutPositions />
                               </value>

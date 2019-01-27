@@ -46,30 +46,40 @@ class TranslatorMapFragment : Fragment() {
         mapView.getMapAsync { m ->
             map = m
             map.setStyle(Style.LIGHT)
+
+            vm.plan.observe(this, Observer { path ->
+                val latLngBounds = LatLngBounds.Builder()
+
+                if (vm.currentPosition.value != null) {
+                    latLngBounds.include(vm.currentPosition.value!!)
+                }
+                if (vm.otherUser.value != null && vm.otherUser.value!!.getLatLng() != null) {
+                    latLngBounds.include(vm.otherUser.value!!.getLatLng()!!)
+                }
+
+                if (path != null) {
+                    val points = PolylineUtils.decode(path, 5).map { LatLng(it.latitude(), it.longitude()) }
+
+                    latLngBounds.includes(points)
+                    val lineManager = LineManager(mapView, map, map.style!!)
+                    val lineOptions = LineOptions()
+                            .withLatLngs(points)
+                            .withLineColor("#048CF2FF")
+                            .withLineWidth(5f)
+
+                    lineManager.create(lineOptions)
+                }
+
+
+                map.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds.build(), 24))
+            })
+
+            vm.otherUser.observe(this, Observer {
+                map.addMarker(MarkerOptions()
+                        .position(it.getLatLng())
+                        .setTitle(it.name))
+            })
         }
-
-        vm.plan.observe(this, Observer { path ->
-            val points = PolylineUtils.decode(path, 5).map { LatLng(it.latitude(), it.longitude()) }
-
-            val latLngBounds = LatLngBounds.Builder().includes(points)
-
-            val lineManager = LineManager(mapView, map, map.style!!)
-            val lineOptions = LineOptions()
-                    .withLatLngs(points)
-                    .withLineColor("#048CF2FF")
-                    .withLineWidth(5f)
-
-            lineManager.create(lineOptions)
-
-            map.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds.build(), 24))
-        })
-
-        vm.otherUser.observe(this, Observer {
-            map.addMarker(MarkerOptions()
-                    .position(it.getLatLng())
-                    .setTitle(it.name))
-        })
-
     }
 
     override fun onStart() {

@@ -12,12 +12,13 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.joyce.translateme.R
 import kotlinx.android.synthetic.main.fragment_permissions_grant.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.security.Permissions
 
 class PermissionsGrantFragment : Fragment() {
 
-    private val vm: RegistrationViewModel by viewModel()
+    private val vm: RegistrationViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

@@ -2,15 +2,21 @@ package com.example.joyce.translateme.ui.wait
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.joyce.translateme.R
+import com.example.joyce.translateme.data.models.Role
+import com.example.joyce.translateme.ui.MainViewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
 class TranslatorWaitFragment : Fragment() {
+
+    private val vm: MainViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -21,7 +27,25 @@ class TranslatorWaitFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        findNavController().navigate(R.id.translatorMapFragment)
+        vm.plan.observe(this, Observer {
+            if (it != null) {
+                findNavController().navigate(R.id.translatorMapFragment)
+            }
+        })
+
+        vm.connectSocket(Role.TRANSLATOR)
+        vm.getLocationUpdates()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        vm.stopLocationUpdates()
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        vm.getLocationUpdates()
     }
 
 }

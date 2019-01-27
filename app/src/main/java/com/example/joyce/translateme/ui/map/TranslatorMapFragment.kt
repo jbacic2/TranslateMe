@@ -5,42 +5,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.example.joyce.translateme.R
+import com.example.joyce.translateme.ui.MainViewModel
 import com.mapbox.core.utils.ColorUtils
+import com.mapbox.geojson.utils.PolylineUtils
 import com.mapbox.mapboxsdk.Mapbox
+import com.mapbox.mapboxsdk.annotations.MarkerOptions
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
+import com.mapbox.mapboxsdk.geometry.LatLngBounds
+import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.Style
 import com.mapbox.mapboxsdk.plugins.annotation.LineManager
 import com.mapbox.mapboxsdk.plugins.annotation.LineOptions
 import kotlinx.android.synthetic.main.fragment_translator_map.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
 class TranslatorMapFragment : Fragment() {
 
-    private val latLngs = listOf<LatLng>(
-            LatLng(
-                    45.49655619089009,
-                    -73.58173727989197),
-            LatLng(
-                    45.49610496505068,
-                    -73.58029961585997
-            ),
-            LatLng(
-                    45.49598839778783,
-                    -73.57995629310608
-            ),
-            LatLng(
-                    45.495702618961175,
-                    -73.57931256294249
-            ),
-            LatLng(
-                    45.495277708287695,
-                    -73.57834696769713
-            ),
-            LatLng(
-                    45.494965603715265,
-                    -73.57872247695923
-            ))
+    private lateinit var map: MapboxMap
+    private val vm: MainViewModel by sharedViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,17 +43,33 @@ class TranslatorMapFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync {map ->
-            map.setStyle(Style.LIGHT) {
-                val lineManager = LineManager(mapView, map, it)
-                val lineOptions = LineOptions()
-                        .withLatLngs(latLngs)
-                        .withLineColor(ColorUtils.toHexString(0, 0, 255))
-                        .withLineWidth(5f)
-
-                lineManager.create(lineOptions)
-            }
+        mapView.getMapAsync { m ->
+            map = m
+            map.setStyle(Style.LIGHT)
         }
+
+        vm.plan.observe(this, Observer { path ->
+            val points = PolylineUtils.decode(path, 5).map { LatLng(it.latitude(), it.longitude()) }
+
+            val latLngBounds = LatLngBounds.Builder().includes(points)
+
+            val lineManager = LineManager(mapView, map, map.style!!)
+            val lineOptions = LineOptions()
+                    .withLatLngs(points)
+                    .withLineColor("#048CF2FF")
+                    .withLineWidth(5f)
+
+            lineManager.create(lineOptions)
+
+            map.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds.build(), 24))
+        })
+
+        vm.otherUser.observe(this, Observer {
+            map.addMarker(MarkerOptions()
+                    .position(it.getLatLng())
+                    .setTitle(it.name))
+        })
+
     }
 
     override fun onStart() {
@@ -78,6 +80,7 @@ class TranslatorMapFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mapView.onResume()
+        vm.getLocationUpdates()
     }
 
     override fun onPause() {
@@ -88,6 +91,7 @@ class TranslatorMapFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         mapView.onStop()
+        vm.stopLocationUpdates()
     }
 
     override fun onLowMemory() {

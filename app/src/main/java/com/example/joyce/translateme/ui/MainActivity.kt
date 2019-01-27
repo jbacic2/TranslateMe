@@ -16,10 +16,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (vm.getLocalUserInfo() == null) {
-            startActivity(Intent(this, RegistrationActivity::class.java))
+        startActivity(Intent(this, RegistrationActivity::class.java))
+
+        /*if (vm.getLocalUserInfo() == null) {
             finish()
-        }
+        }*/
     }
 
     override fun onSupportNavigateUp(): Boolean = findNavController(R.id.nav_host_fragment).navigateUp()
